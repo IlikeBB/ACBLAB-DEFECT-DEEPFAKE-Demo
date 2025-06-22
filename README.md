@@ -21,7 +21,7 @@ pip install torch torchvision transformers pillow opencv-python numpy paddlepadd
 
 Clone the MobileFaceSwap repository alongside `defect_generator.py`:
 ```bash
-git clone https://github.com/IlikeBB/MobileFaceSwap.git
+git clone https://github.com/Seanseattle/MobileFaceSwap.git
 ```
 
 ## Directory Structure
@@ -66,6 +66,10 @@ Run deepfake detection:
 ```bash
 python defect_detector_hf.py
 ```
+
+## Related Links
+- **MobileFaceSwap GitHub Repository:** https://github.com/Seanseattle/MobileFaceSwap  
+- **HuggingFace Deepfake Models:** https://huggingface.co/models?sort=downloads&search=deepfake  
 
 ## Troubleshooting
 1. **Missing Python Modules**  
