@@ -27,7 +27,7 @@ if __name__ == '__main__':
     
     # === CONFIGURATION ===
     # 僅需指定單張圖像路徑 / Specify a single image path
-    IMAGE_PATH = r"C:\Users\ru035\Desktop\Icloud\iCloudDrive\Documents\DeepFake_WebDemo\results\a_53f98b047b194b5f9c7198e98d7a309c_swap.png"  # 中/EN: Path to the image file to test
+    IMAGE_PATH = r"Demo_Image\000_098.png"  # 中/EN: Path to the image file to test
     # 使用的 HuggingFace 模型 ID / HF_MODEL: Pretrained model identifier
     HF_MODEL = "prithivMLmods/open-deepfake-detection"
     # =====================
