@@ -5,21 +5,21 @@ This repository contains two CPU-only Python scripts for:
 1. **Face-Swap Generation** (`defect_generator.py`)  
 2. **Deepfake Detection** (`defect_detector_hf.py`)
 
-Each script uses hardcoded paths. Edit configuration variables at the top of each file before running.
+Both scripts use hardcoded paths. Edit configuration variables at the top of each file before running.
 
 ## Prerequisites
-- Python 3.8+
-- Git (for cloning MobileFaceSwap)
-- Internet connection (for downloading HuggingFace model)
+- Python 3.8 or above
+- Git (to clone MobileFaceSwap)
+- Internet connection (for downloading the HuggingFace model)
 
 ## Installation
 Install required Python packages:
 ```bash
 pip install torch torchvision transformers pillow opencv-python numpy paddlepaddle tqdm
 ```
-> **Note:** For `paddlepaddle`, choose the correct package for your CPU platform, e.g. `pip install paddlepaddle`.
+> For CPU-only PaddlePaddle, use the appropriate command from https://www.paddlepaddle.org.cn/install/quick.
 
-Clone the MobileFaceSwap repository next to `defect_generator.py`:
+Clone the MobileFaceSwap repository alongside `defect_generator.py`:
 ```bash
 git clone https://github.com/IlikeBB/MobileFaceSwap.git
 ```
@@ -31,28 +31,28 @@ ACBLAB-DEFECT-DEEPFAKE-Demo/
 ├── defect_detector_hf.py
 ├── MobileFaceSwap/              # clone here
 ├── data/
-│   ├── source/source.jpg        # input face for generator
+│   ├── source/source.jpg        # input for generator
 │   └── target/                  # single image or folder for generator
-├── results/                     # outputs will be saved here
-├── models/
-│   └── pretrained_detector.pth  # (optional) local HF model cache
+├── results/                     # outputs; script creates if missing
+└── models/
+    └── pretrained_detector.pth  # optional local HF model cache
 ```
 
 ## Configuration
 ### defect_generator.py
-Edit the top section:
+At the top of the file, set:
 ```python
-SOURCE = r"<path to aligned source face image>"
-TARGET = r"<path or directory of target image(s)>"
+SOURCE = "<path to aligned source image>"
+TARGET = "<path or directory of target images>"
 OUTPUT_DIR = "results"
 GITHUB_PROJECT_PATH = os.path.join(dir_here, "MobileFaceSwap")
 WEIGHT_PATH = os.path.join(GITHUB_PROJECT_PATH, "checkpoints", "MobileFaceSwap_224.pdparams")
 ```
 
 ### defect_detector_hf.py
-Edit the top section:
+At the top of the file, set:
 ```python
-IMAGE_PATH = r"<path to image file to test>"
+IMAGE_PATH = "<path to test image>"
 HF_MODEL = "prithivMLmods/open-deepfake-detection"
 ```
 
@@ -61,42 +61,37 @@ Run face-swap generation:
 ```bash
 python defect_generator.py
 ```
+
 Run deepfake detection:
 ```bash
 python defect_detector_hf.py
 ```
 
 ## Troubleshooting
-1. **ModuleNotFoundError**  
-   - Ensure all packages are installed (`torch`, `transformers`, `paddlepaddle`, etc.).  
-   - For `paddlepaddle`, install the correct CPU-only version.
+1. **Missing Python Modules**  
+   - Verify installation of `torch`, `transformers`, `paddlepaddle`, etc.
 
-2. **MobileFaceSwap Repo Not Found**  
-   - Confirm `MobileFaceSwap/` folder is in the same directory as `defect_generator.py`.  
-   - Folder name must match `GITHUB_PROJECT_PATH` variable.
+2. **MobileFaceSwap Not Found**  
+   - Ensure `MobileFaceSwap/` is in the same directory as `defect_generator.py`.
 
-3. **FileNotFoundError (IMAGE_PATH or model path)**  
-   - Verify path strings in each script—watch for backslashes (`\`) on Windows or raw strings.  
-   - Ensure files exist and paths are correct.
+3. **FileNotFoundError**  
+   - Double-check the path variables in each script for typos and correct separators.
 
-4. **HuggingFace Model Download Issues**  
-   - Check internet connection.  
-   - If rate-limited, pre-download model to `~/.cache/huggingface/transformers` or specify `cache_dir`.
+4. **HuggingFace Download Fails**  
+   - Check your internet or use a cached model directory (`cache_dir` in HF).
 
-5. **Image Decode Failure**  
-   - For non-ASCII paths, `imread_unicode` handles long or Unicode file names.  
-   - If still failing, move images to a simple path (e.g., `C:/data/source.jpg`).
+5. **Image Read/Decode Errors**  
+   - For Unicode or long paths, `imread_unicode` handles it; otherwise use simple paths.
 
-6. **Dimension Mismatch**  
-   - In generator, input images must be resized to 224×224 before model inference.  
-   - In detector, HF processor expects standard image formats (`RGB`).
+6. **Dimension or Resize Issues**  
+   - Generator: input images resized to 224×224 within the script.  
+   - Detector: processor expects RGB PIL images.
 
-7. **Memory Constraints**  
-   - Both scripts run on CPU; large images may be slow.  
-   - Resize images to 256×256 or smaller to speed up processing.
+7. **Out of Memory / Performance**  
+   - Both scripts run on CPU; use smaller images (e.g., 256×256) to speed up.
 
-8. **PermissionError**  
-   - Ensure `results/` folder is writable:  
+8. **Permission Denied**  
+   - Ensure `results/` is writable:
      ```bash
      chmod +w results/
      ```
