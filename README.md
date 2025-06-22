@@ -50,8 +50,6 @@ ACBLAB-DEFECT-DEEPFAKE-Demo/
 │   ├── source/source.jpg
 │   └── target/
 ├── results/
-└── models/
-    └── pretrained_detector.pth
 ```
 
 ## Configuration
@@ -179,8 +177,6 @@ ACBLAB-DEFECT-DEEPFAKE-Demo/
 │   ├── source/source.jpg
 │   └── target/
 ├── results/
-└── models/
-    └── pretrained_detector.pth
 ```
 
 ## 配置
