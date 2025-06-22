@@ -82,15 +82,42 @@ python defect_detector_hf.py
 - MobileFaceSwap GitHub Repository: https://github.com/Seanseattle/MobileFaceSwap  
 - HuggingFace Deepfake Models: https://huggingface.co/models?sort=downloads&search=deepfake
 
-## Troubleshooting
+## Troubleshooting Examples
 1. **Missing Python Modules**  
-2. **MobileFaceSwap Not Found**  
-3. **FileNotFoundError**  
-4. **HuggingFace Download Fails**  
-5. **Image Read/Decode Errors**  
-6. **Dimension/Resize Issues**  
-7. **Out of Memory / Performance**  
-8. **Permission Denied**
+   - *Error:* `ModuleNotFoundError: No module named 'torch'`  
+   - *Reason:* Required package not installed.  
+   - *Solution:* `pip install torch torchvision`
+
+2. **File Not Found**  
+   - *Error:* `FileNotFoundError: [Errno 2] No such file or directory: 'data/source/source.jpg'`  
+   - *Reason:* IMAGE_PATH or SOURCE path is incorrect or file missing.  
+   - *Solution:* Check the path variable and ensure the file exists.
+
+3. **HuggingFace Model Download Timeout**  
+   - *Error:* `HTTPError: Connection timed out`  
+   - *Reason:* Network issues or rate limits.  
+   - *Solution:* Pre-download the model manually:  
+     ```bash
+     transformers-cli download prithivMLmods/open-deepfake-detection
+     ```
+
+4. **Image Decode Failure**  
+   - *Error:* `cv2.error: OpenCV(4.x.x) ... unsupported or invalid image format`  
+   - *Reason:* Incorrect image format or corrupted file.  
+   - *Solution:* Convert to `.png` or `.jpg`, or use `imread_unicode` for long paths.
+
+5. **Memory Exhaustion**  
+   - *Error:* `RuntimeError: CUDA out of memory` or slow CPU processing  
+   - *Reason:* Large image sizes.  
+   - *Solution:* Resize images to 256×256 or smaller.
+
+6. **Permission Denied**  
+   - *Error:* `PermissionError: [Errno 13] Permission denied: 'results/'`  
+   - *Reason:* Output directory not writable.  
+   - *Solution:*  
+     ```bash
+     chmod +w results/
+     ```
 
 ## License
 MIT
@@ -116,13 +143,16 @@ MIT
 
 ## 先決條件
 - Python 3.8 或以上  
-- Git  
-- 網路連線
+- Git（用於克隆 MobileFaceSwap）  
+- 網路連線（用於下載 HuggingFace 模型）
 
 ## 安裝
+安裝所需的 Python 套件：
 ```bash
 pip install torch torchvision transformers pillow opencv-python numpy paddlepaddle tqdm
 ```
+> 若僅需 CPU 版本 PaddlePaddle，請參考 https://www.paddlepaddle.org.cn/install/quick。
+
 克隆 MobileFaceSwap：
 ```bash
 git clone https://github.com/Seanseattle/MobileFaceSwap.git
@@ -143,39 +173,76 @@ ACBLAB-DEFECT-DEEPFAKE-Demo/
 ```
 
 ## 配置
+
 ### defect_generator.py
+在檔案頂部設定：
 ```python
 SOURCE = "<對齊後來源圖像路徑>"
-TARGET = "<目標圖像路徑>"
+TARGET = "<目標圖像或資料夾路徑>"
 OUTPUT_DIR = "results"
+GITHUB_PROJECT_PATH = os.path.join(dir_here, "MobileFaceSwap")
+WEIGHT_PATH = os.path.join(GITHUB_PROJECT_PATH, "checkpoints", "MobileFaceSwap_224.pdparams")
 ```
-> 下載權重: https://github.com/Seanseattle/MobileFaceSwap/blob/main/checkpoints/MobileFaceSwap_224.pdparams?raw=true
+> **注意：** 請從  
+> https://github.com/Seanseattle/MobileFaceSwap/blob/main/checkpoints/MobileFaceSwap_224.pdparams?raw=true  
+> 下載預訓練權重檔。
 
 ### defect_detector_hf.py
+在檔案頂部設定：
 ```python
 IMAGE_PATH = "<待測試圖像路徑>"
 HF_MODEL   = "prithivMLmods/open-deepfake-detection"
 ```
 
-## 使用
+## 使用方式
+執行人臉置換：
 ```bash
 python defect_generator.py
+```
+執行深偽偵測：
+```bash
 python defect_detector_hf.py
 ```
 
-## 相關連結
-- https://github.com/Seanseattle/MobileFaceSwap
-- https://huggingface.co/models?sort=downloads&search=deepfake
+## 故障排除示例
+1. **缺少 Python 套件**  
+   - *錯誤:* `ModuleNotFoundError: No module named 'torch'`  
+   - *原因:* 未安裝必要套件  
+   - *解決:*  
+     ```bash
+     pip install torch torchvision
+     ```
 
-## 故障排除
-- 模組缺少  
-- 儲存庫不存在  
-- 檔案未找到  
-- 下載失敗  
-- 解碼錯誤  
-- 尺寸問題  
-- 記憶體不足  
-- 權限被拒
+2. **檔案未找到**  
+   - *錯誤:* `FileNotFoundError: [Errno 2] No such file or directory: 'data/source/source.jpg'`  
+   - *原因:* 路徑錯誤或檔案不存在  
+   - *解決:* 確認檔案路徑及名稱
+
+3. **HuggingFace 下載逾時**  
+   - *錯誤:* `HTTPError: Connection timed out`  
+   - *原因:* 網路或速率限制  
+   - *解決:*  
+     ```bash
+     transformers-cli download prithivMLmods/open-deepfake-detection
+     ```
+
+4. **影像解碼失敗**  
+   - *錯誤:* `cv2.error: unsupported or invalid image format`  
+   - *原因:* 圖片格式不支援或損毀  
+   - *解決:* 轉檔為 `.jpg` 或 `.png`，或使用 `imread_unicode`
+
+5. **記憶體不足**  
+   - *錯誤:* `RuntimeError: CUDA out of memory`  
+   - *原因:* 圖片過大  
+   - *解決:* 調整為 256×256 或更小
+
+6. **權限被拒**  
+   - *錯誤:* `PermissionError: [Errno 13] Permission denied: 'results/'`  
+   - *原因:* 無寫入權限  
+   - *解決:*  
+     ```bash
+     chmod +w results/
+     ```
 
 ## 授權
 MIT
