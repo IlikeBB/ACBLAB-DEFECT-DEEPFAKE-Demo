@@ -18,8 +18,8 @@ dir_here = os.path.dirname(os.path.abspath(__file__))
 # If repo folder named "MobileFaceSwap" in same directory as this script
 GITHUB_PROJECT_PATH = os.path.join(dir_here, "MobileFaceSwap")
 
-SOURCE = r"C:\Users\ru035\Desktop\Icloud\iCloudDrive\Documents\DeepFake_WebDemo\deepfake_site\media\a_53f98b047b194b5f9c7198e98d7a309c_aligned.png" # path to source aligned face image
-TARGET = r"C:\Users\ru035\Desktop\Icloud\iCloudDrive\Documents\DeepFake_WebDemo\deepfake_site\media\a_53f98b047b194b5f9c7198e98d7a309c.png" # path to target aligned face image or directory
+SOURCE = r"./Demo_Image/073_032.png" # path to source aligned face image
+TARGET = r"./Demo_Image/000_098.png" # path to target aligned face image or directory
 OUTPUT_DIR = "results"                  # directory for swapped results
 WEIGHT_PATH = os.path.join(GITHUB_PROJECT_PATH, "checkpoints", "MobileFaceSwap_224.pdparams")
 # =====================
