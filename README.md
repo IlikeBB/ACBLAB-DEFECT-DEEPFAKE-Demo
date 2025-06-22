@@ -79,8 +79,14 @@ python defect_detector_hf.py
 ```
 
 ## Related Links
-- MobileFaceSwap GitHub Repository: https://github.com/Seanseattle/MobileFaceSwap  
-- HuggingFace Deepfake Models: https://huggingface.co/models?sort=downloads&search=deepfake
+- **MobileFaceSwap GitHub Repository**: https://github.com/Seanseattle/MobileFaceSwap  
+- **HuggingFace Deepfake Models**: https://huggingface.co/models?sort=downloads&search=deepfake  
+- **PyTorch Previous Versions**: https://pytorch.org/get-started/previous-versions/  
+  *Use this link to download and install a specific PyTorch release compatible with your CUDA or CPU setup.*  
+- **Miniconda Installer**: https://www.anaconda.com/docs/getting-started/miniconda/install  
+  *Miniconda provides a lightweight environment manager for creating isolated Python environments.*  
+- **HuggingFace Hub**: https://huggingface.co  
+  *Explore and download open-source models, datasets, and more from the HuggingFace community.*
 
 ## Troubleshooting Examples
 1. **Missing Python Modules**  
@@ -102,7 +108,7 @@ python defect_detector_hf.py
      ```
 
 4. **Image Decode Failure**  
-   - *Error:* `cv2.error: OpenCV(4.x.x) ... unsupported or invalid image format`  
+   - *Error:* `cv2.error: unsupported or invalid image format`  
    - *Reason:* Incorrect image format or corrupted file.  
    - *Solution:* Convert to `.png` or `.jpg`, or use `imread_unicode` for long paths.
 
@@ -203,6 +209,16 @@ python defect_generator.py
 ```bash
 python defect_detector_hf.py
 ```
+
+## 相關連結
+- **MobileFaceSwap GitHub 儲存庫**： https://github.com/Seanseattle/MobileFaceSwap  
+- **HuggingFace 深偽模型**： https://huggingface.co/models?sort=downloads&search=deepfake  
+- **PyTorch 舊版本下載**： https://pytorch.org/get-started/previous-versions/  
+  *可從此下載與您的 CUDA/CPU 相容的特定 PyTorch 版本。*  
+- **Miniconda 安裝指南**： https://www.anaconda.com/docs/getting-started/miniconda/install  
+  *使用 Miniconda 建立隔離的 Python 虛擬環境。*  
+- **HuggingFace Hub**： https://huggingface.co  
+  *探索並下載開源模型、資料集等資源。*
 
 ## 故障排除示例
 1. **缺少 Python 套件**  
