@@ -5,18 +5,7 @@
 
 <details>
 <summary>🇬🇧 English</summary>
-
----
-
-## Demo WebSite
-**Demo Web:** [Link](http://140.113.164.91:8888)  
-<img src="https://github.com/user-attachments/assets/e32f0297-50b3-4b89-8813-5f83e0dc2cc5" alt="Demo Screenshot" width="100%" />
-
-## Overview
-<summary>🇬🇧 English</summary>
-
----
-
+___
 ## Demo WebSite
 **Demo Web:** [Link](http://140.113.164.91:8888)  
 <img src="https://github.com/user-attachments/assets/e32f0297-50b3-4b89-8813-5f83e0dc2cc5" alt="Demo Screenshot" width="100%" />
