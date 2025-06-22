@@ -26,8 +26,8 @@ Both scripts use hardcoded paths. Edit configuration variables at the top of eac
 
 ## Prerequisites
 - Python 3.8 or above  
-- Git (to clone MobileFaceSwap)  
-- Internet connection (for downloading the HuggingFace model)
+- Git (to clone [MobileFaceSwap](https://github.com/Seanseattle/MobileFaceSwap))  
+- Internet connection (for downloading the [HuggingFace model](https://huggingface.co/models?sort=downloads&search=deepfake))
 
 ## Installation
 Install required Python packages:
@@ -156,9 +156,8 @@ MIT
 
 ## 先決條件
 - Python 3.8 或以上  
-- Git（用於克隆 MobileFaceSwap）  
-- 網路連線（用於下載 HuggingFace 模型）
-
+- Git（用於克隆 [MobileFaceSwap](https://github.com/Seanseattle/MobileFaceSwap))  
+- 網路連線（用於下載 [HuggingFace 模型](https://huggingface.co/models?sort=downloads&search=deepfake))
 ## 安裝
 安裝所需的 Python 套件：
 ```bash
