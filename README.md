@@ -34,7 +34,6 @@ Install required Python packages:
 ```bash
 pip install torch torchvision transformers pillow opencv-python numpy paddlepaddle tqdm
 ```
-> For CPU-only PaddlePaddle, use the appropriate command from https://www.paddlepaddle.org.cn/install/quick.
 
 Clone the MobileFaceSwap repository alongside `defect_generator.py`:
 ```bash
@@ -165,7 +164,6 @@ MIT
 ```bash
 pip install torch torchvision transformers pillow opencv-python numpy paddlepaddle tqdm
 ```
-> 若僅需 CPU 版本 PaddlePaddle，請參考 https://www.paddlepaddle.org.cn/install/quick。
 
 克隆 MobileFaceSwap：
 ```bash
