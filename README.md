@@ -1,84 +1,55 @@
 # ACBLAB Defect Deepfake Demo
 
 ## Overview
-This project demonstrates two key functionalities:
+This project demonstrates two key functionalities via two Python scripts:
 
-1. **Face-Swap Generation** using `defect_generator.py`  
-   Swap a face from a source image onto a target image.
+1. **Face-Swap Generation**: `defect_generator.py`  
+2. **Deepfake Detection**: `defect_detector.py`  
 
-2. **Deepfake Detection** using `defect_detector.py`  
-   Detect whether an image is real or fake with a pretrained model.
+Both scripts use hardcoded file paths—no command-line arguments are required.
 
-## Requirements
-- Python 3.8 or above
-- Packages (install via `pip install`):
-  - torch
-  - torchvision
-  - opencv-python
-  - numpy
-  - pillow
-  - argparse
-  - tqdm
-
-## Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/IlikeBB/ACBLAB-DEFECT-DEEPFAKE-Demo.git
-   cd ACBLAB-DEFECT-DEEPFAKE-Demo
+## Setup
+1. Open `defect_generator.py` and edit these variables at the top of the file:
+   ```python
+   source_path = "./data/source/source.jpg"
+   target_path = "./data/target/target.jpg"
+   output_path = "./results/swapped.jpg"
    ```
-2. (Optional) Create and activate a virtual environment:
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate   # Linux/macOS
-   venv\Scripts\activate    # Windows
+2. Open `defect_detector.py` and edit:
+   ```python
+   image_path = "./results/swapped.jpg"
+   model_path = "./models/pretrained_detector.pth"
    ```
-3. Install dependencies:
-   ```bash
-   pip install torch torchvision opencv-python numpy pillow argparse tqdm
+3. Ensure your folder structure matches:
    ```
-
-## Data Preparation
-- Place a source face image as `./data/source/source.jpg`
-- Place a target face image as `./data/target/target.jpg`
-
-Ensure images are approximately 256×256 pixels for optimal performance.
-
-## Usage
-
-### 1. Generate Face-Swap Result
-```bash
-python defect_generator.py   --source ./data/source/source.jpg   --target ./data/target/target.jpg   --output ./results/swapped.jpg
-```
-- `--source`: Path to source image  
-- `--target`: Path to target image  
-- `--output`: Path for the output image
-
-If you encounter CUDA memory errors, try downsampling your images or run in CPU mode:
-```bash
-python defect_generator.py --device cpu ...
-```
-
-### 2. Detect Real vs. Fake
-```bash
-python defect_detector.py   --image ./results/swapped.jpg   --model ./models/pretrained_detector.pth
-```
-- `--image`: Path to the image to test  
-- `--model`: Path to the pretrained detection model  
-
-Example output:
-```
-P(Real)= 0.12
-P(Fake)= 0.88
-Label: Fake
-```
+   data/source/
+   data/target/
+   results/
+   models/
+   ```
+4. Run each script with Python:
+   ```bash
+   python defect_generator.py
+   python defect_detector.py
+   ```
 
 ## Troubleshooting
-- **Module Not Found**: Ensure all packages are installed and your PYTHONPATH is correct.
-- **File Not Found**: Verify that the paths for `--source`, `--target`, and `--model` are correct.
-- **Memory Errors**: Reduce image size or switch to CPU mode.
+- **Path Errors**:  
+  - If the script cannot find an image or model file, double‑check the variables you edited for typos and correct folder names.
+- **Memory Errors**:  
+  - In `defect_generator.py`, before processing, you can resize the images:
+    ```python
+    import cv2
+    img = cv2.imread(source_path)
+    img = cv2.resize(img, (256, 256))
+    ```
+- **Model Loading Issues**:  
+  - In `defect_detector.py`, ensure `torch.load(model_path, map_location="cpu")` if you don’t have a GPU.
+- **Permissions**:  
+  - If you get a permission denied error writing results, check that `results/` is writable:
+    ```bash
+    chmod +w results/
+    ```
 
 ## License
 MIT
-
-## Author
-ACBLAB Training Team
