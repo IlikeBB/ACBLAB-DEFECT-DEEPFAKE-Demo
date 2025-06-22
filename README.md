@@ -1,4 +1,12 @@
 # ACBLAB Defect Deepfake Demo
+> **English (Educator’s Note):**
+> In this demo, you’re not limited to the sample scripts provided. Today, there are numerous public resources and implementations for generating and detecting deepfakes—many on GitHub or HuggingFace. If you’re unsure where to start or need help with Python setup, refer first to the translated example scripts we’ve shared here, then try running them. Once you succeed, explore other models—perhaps you’ll find more accurate detectors or higher-quality face-swap generators to test your data.
+> Demo slide deck: [slide link here](https://www.canva.com/design/DAGqtDjaouo/8iTYQu4UZHARx_ToNfnh4w/edit?utm_content=DAGqtDjaouo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
+> **中文（教學者說明）：**
+> 在本次示範中，不必侷限於使用範例腳本。現今生成與偵測深偽造的公開資源豐富，無論是 GitHub 上的程式碼或 HuggingFace 上的模型，都可下載並測試。如果不確定如何開始，或對 Python 環境設置仍有疑問，可先參考我們提供的翻譯範例程式並嘗試執行；成功後，再尋找更準確的偵測器或更優質的人臉置換生成器來驗證數據。
+> 示範簡報：在此查看 [簡報連結](https://www.canva.com/design/DAGqtDjaouo/8iTYQu4UZHARx_ToNfnh4w/edit?utm_content=DAGqtDjaouo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
 
 <details>
 <summary>🇬🇧 English</summary>
@@ -263,10 +271,4 @@ MIT
 
 ---
 </details>
-
-> **English (Educator’s Note):**
-> In this demo, you’re not limited to the sample scripts provided. Today, there are numerous public resources and implementations for generating and detecting deepfakes—many on GitHub or HuggingFace. If you’re unsure where to start or need help with Python setup, refer first to the translated example scripts we’ve shared here, then try running them. Once you succeed, explore other models—perhaps you’ll find more accurate detectors or higher-quality face-swap generators to test your data.
-
-> **中文（教學者說明）：**
-> 在本次示範中，不必侷限於使用範例腳本。現今生成與偵測深偽造的公開資源豐富，無論是 GitHub 上的程式碼或 HuggingFace 上的模型，都可下載並測試。如果不確定如何開始，或對 Python 環境設置仍有疑問，可先參考我們提供的翻譯範例程式並嘗試執行；成功後，再尋找更準確的偵測器或更優質的人臉置換生成器來驗證數據。
 
