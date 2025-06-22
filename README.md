@@ -67,7 +67,7 @@ GITHUB_PROJECT_PATH = os.path.join(dir_here, "MobileFaceSwap")
 WEIGHT_PATH = os.path.join(GITHUB_PROJECT_PATH, "checkpoints", "MobileFaceSwap_224.pdparams")
 ```
 > **Note:** Download the pretrained weights from  
-> https://github.com/Seanseattle/MobileFaceSwap/blob/main/checkpoints/MobileFaceSwap_224.pdparams?raw=true
+> https://github.com/Seanseattle/MobileFaceSwap/blob/main/checkpoints
 
 ### defect_detector_hf.py
 At the top of the file, set:
@@ -198,7 +198,7 @@ GITHUB_PROJECT_PATH = os.path.join(dir_here, "MobileFaceSwap")
 WEIGHT_PATH = os.path.join(GITHUB_PROJECT_PATH, "checkpoints", "MobileFaceSwap_224.pdparams")
 ```
 > **注意：** 請從  
-> https://github.com/Seanseattle/MobileFaceSwap/blob/main/checkpoints/MobileFaceSwap_224.pdparams?raw=true  
+> https://github.com/Seanseattle/MobileFaceSwap/blob/main/checkpoints/
 > 下載預訓練權重檔。
 
 ### defect_detector_hf.py
