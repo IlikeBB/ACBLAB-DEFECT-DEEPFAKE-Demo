@@ -1,8 +1,3 @@
-# ACBLAB Defect Deepfake Demo
-
-> **Note:** During the demo, you are not limited to using this code base.  
-> If you find better face-swap or deepfake detection implementations on GitHub or HuggingFace, feel free to integrate them instead of (or alongside) this demo package.
-
 > **English (Educator’s Note):**
 > During this demo, feel free to explore beyond this codebase. Today, generating and detecting deepfakes is remarkably easy—there are countless open-source implementations on GitHub and models on HuggingFace you can try. If you’re ever unsure how to get started or need help setting up your Python environment, check out the example scripts below and see if you can run them. Don’t be afraid to experiment—hands-on practice is the best way to learn!
 
