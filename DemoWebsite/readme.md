@@ -52,10 +52,4 @@ Clone the [MobileFaceSwap](https://github.com/justinpinkney/MobileFaceSwap) repo
 ```bash
 # Start Django server
 python manage.py runserver 0.0.0.0:8000
-
-# In another terminal, run the generator
-python defect_generator.py \
-  --source path/to/source.jpg \
-  --target path/to/target.jpg \
-  --output results/
 ```
