@@ -4,12 +4,12 @@
 
 ## <span class="lang-en">Project Structure</span><span class="lang-zh">專案結構</span>
 
-- **`deepfake_site/manage.py`**：Django 啟動與管理腳本。
-- **`deepfake_site/deepfake_site/settings.py`**：網站設定。
-- **`deepfake_site/deepfake_site/urls.py`**：全域路由。
-- **`deepfake_site/forgery_detector/views.py`**：處理上傳、換臉、檢測三大動作。
-- **`deepfake_site/forgery_detector/predict.py`**：`detect_deepfake(...)` 函式實作。
-- **`deepfake_site/forgery_detector/templates/forgery_detector/dashboard.html`**：主頁面，多語切換與 UI。
+- **`./manage.py`**：Django 啟動與管理腳本。
+- **`./deepfake_site/settings.py`**：網站設定。
+- **`./deepfake_site/urls.py`**：全域路由。
+- **`./forgery_detector/views.py`**：處理上傳、換臉、檢測三大動作。
+- **`./forgery_detector/predict.py`**：`detect_deepfake(...)` 函式實作。
+- **`./forgery_detector/templates/forgery_detector/dashboard.html`**：主頁面，多語切換與 UI。
 - **`defect_generator.py`**：（放在根目錄）執行換臉流程。
 - **`defect_detector.py`**：（放在根目錄）執行偽造檢測流程。
 
