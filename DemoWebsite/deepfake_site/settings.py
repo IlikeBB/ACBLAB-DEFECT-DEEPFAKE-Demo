@@ -2,10 +2,12 @@ import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+# 偽造檢測模型權重路徑
 
 SECRET_KEY = 'your-secret-key'
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['{Real IP}', 'localhost', '127.0.0.1']
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -66,3 +68,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 RESOURCE_URL = '/resources/'
 RESOURCE_ROOT = os.path.join(BASE_DIR, 'resources')
+
+# Deepfake 檢測模型選項
+DETECT_MODEL_CHOICES = [
+    ('hf_vit', 'HuggingFace ViT Deepfake-Detector-v2'),
+    ('Wvolf','HuggingFace ViT_Deepfake_Detection'),
+    ('HrutikAdsare','HuggingFace deepfake-detector-faceforensics'),
+    ('dima806','HuggingFace deepfake_vs_real_image_detection')
+    # ('mesonet', 'MesoNet-4'),  # 未來擴充
+]
+DEFAULT_DETECT_MODEL = 'hf_vit'
