@@ -1,4 +1,148 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-<head> ...
-</head><body> ... </body></html>
+<head>
+  <meta charset="utf-8">
+  <title>
+    <span class="lang zh">DeepFake 換臉 Demo</span>
+    <span class="lang en">DeepFake Face Swap Demo</span>
+  </title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", sans-serif; background: #f4f5f7; color: #333; }
+    .lang { display: none; }
+    .lang.zh { display: inline; }
+    h1 { text-align: center; margin: 40px 0; font-size: 2.5rem; }
+    h2 { font-size: 2rem; margin-bottom: 1rem; }
+    h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+    .btn { background: #4f46e5; color: white; padding: 0.75em 1.5em; border: none; border-radius: 4px; cursor: pointer; transition: background 0.2s; font-size: 1rem; }
+    .btn:hover { background: #4338ca; }
+    .lang-toggle { text-align: center; margin: 20px 0; }
+    .lang-toggle .btn { margin: 0 5px; }
+    .form-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 30px; }
+    .file-input { display: flex; flex-direction: column; align-items: center; font-size: 1rem; }
+    .file-input input[type=file] { margin-top: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 0 20px 40px; }
+    .card { background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 20px; text-align: center; }
+    .preview { width: 100%; height: 250px; background: #fafafa; border: 2px dashed #ddd; border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .preview img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .note { font-size: 1rem; color: #666; }
+    select, input[type=file] { padding: 0.6em; font-size: 1rem; }
+    .detection-section { margin: 40px 20px; background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .detection-section .grid { grid-template-columns: 1fr 1fr !important; }
+    .detection-section .preview { height: 250px; }
+    .detection-section canvas { width: 300px !important; height: 300px !important; margin: 0 auto; display: block; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="lang-toggle">
+    <button id="btn-zh" class="btn"><span class="lang zh">中文</span><span class="lang en">中文</span></button>
+    <button id="btn-en" class="btn"><span class="lang zh">English</span><span class="lang en">English</span></button>
+  </div>
+  <h1><span class="lang zh">DeepFake 換臉 Demo</span><span class="lang en">DeepFake Face Swap Demo</span></h1>
+  <div style="text-align:center; margin-bottom:20px; font-size:1rem;"><span class="lang zh">換臉模型來源：</span><span class="lang en">Swap model source:</span> <a href="{{ swap_model_link }}" target="_blank">[MobileFaceSwap]</a></div>
+
+  <!-- 上傳 A/B -->
+  <form id="uploadForm" method="post" enctype="multipart/form-data" class="form-container">
+    {% csrf_token %}<input type="hidden" name="action" value="upload">
+    <div class="file-input"><label for="src"><span class="lang zh">來源圖 A</span><span class="lang en">Source A</span></label>{{ swap_form.src }}</div>
+    <div class="file-input"><label for="dst"><span class="lang zh">目標圖 B</span><span class="lang en">Target B</span></label>{{ swap_form.dst }}</div>
+    <button class="btn" type="submit"><span class="lang zh">上傳 A 與 B</span><span class="lang en">Upload A & B</span></button>
+  </form>
+
+  <!-- 執行換臉按鈕 -->
+  {% if result_a and result_b %}
+  <div style="text-align:center; margin:20px 0;"><form method="post">{% csrf_token %}<input type="hidden" name="action" value="swap"><button class="btn"><span class="lang zh">執行換臉</span><span class="lang en">Execute Swap</span></button></form></div>
+  {% endif %}
+
+  <!-- 三圖預覽 -->
+  <div class="grid">
+    <div class="card"><h3><span class="lang zh">來源圖 A</span><span class="lang en">Source A</span></h3><div class="preview">{% if result_a %}<img src="{{ result_a }}" alt="A">{% else %}<p class="note"><span class="lang zh">尚未上傳 A</span><span class="lang en">A not uploaded</span></p>{% endif %}</div></div>
+    <div class="card"><h3><span class="lang zh">目標圖 B</span><span class="lang en">Target B</span></h3><div class="preview">{% if result_b %}<img src="{{ result_b }}" alt="B">{% else %}<p class="note"><span class="lang zh">尚未上傳 B</span><span class="lang en">B not uploaded</span></p>{% endif %}</div></div>
+    <div class="card"><h3><span class="lang zh">換臉結果 C</span><span class="lang en">Swap Result C</span></h3><div class="preview">{% if result_swap %}<img src="{{ result_swap }}" alt="C">{% else %}<p class="note"><span class="lang zh">尚未執行換臉</span><span class="lang en">Not swapped yet</span></p>{% endif %}</div>{% if result_swap %}<div style="text-align:center; margin-top:10px;"><a href="{{ result_swap }}" download class="btn"><span class="lang zh">下載 C 圖</span><span class="lang en">Download C</span></a></div>{% endif %}</div>
+  </div>
+
+  <!-- 偽造檢測 -->
+  <div class="detection-section">
+    <h2 style="text-align:center;"><span class="lang zh">照片真偽檢測</span><span class="lang en">Photo Authenticity Detection</span></h2>
+    <div style="text-align:center; margin-bottom:20px; font-size:1rem;"><span class="lang zh">檢測模型來源：</span><span class="lang en">Detection model source:</span> <a href="{{ detect_model_link }}" target="_blank">[Hugging Face]</a></div>
+    <form method="post" enctype="multipart/form-data" class="form-container">
+      {% csrf_token %}<input type="hidden" name="action" value="detect">
+      <div class="file-input"><label for="diff_img"><span class="lang zh">待檢測圖片</span><span class="lang en">Image to Detect</span></label>{{ diff_form.diff_img }}</div>
+      <div class="file-input"><label for="model_choice"><span class="lang zh">檢測模型</span><span class="lang en">Model Choice</span></label>{{ diff_form.model_choice }}</div>
+      <button class="btn" type="submit"><span class="lang zh">檢測真偽</span><span class="lang en">Detect</span></button>
+    </form>
+    {% if diff_src %}
+    <div class="grid" style="margin-top:20px;">
+      <div class="card"><h3><span class="lang zh">上傳的圖片</span><span class="lang en">Uploaded Image</span></h3><div class="preview"><img src="{{ diff_src }}" alt="diff"></div></div>
+      <div class="card"><h3><span class="lang zh">檢測結果</span><span class="lang en">Detection Result</span><br><small style="font-size:1rem;">(<span class="lang zh">模型</span><span class="lang en">Model</span>：{{ diff_model }})</small></h3>{% if diff_result %}<canvas id="dfChart"></canvas>{% else %}<p class="note"><span class="lang zh">尚未檢測</span><span class="lang en">Not detected yet</span></p>{% endif %}</div>
+    </div>
+    {% endif %}
+  </div>
+  <div class="detection-section">
+  <div><h1><a href="https://github.com/IlikeBB/ACVLAB-DEFECT-DEEPFAKE-Demo" target="_blank">[ACVLAB Demo Code]</a></div>
+  <hr>
+  <div class="card"><h2><span class="lang zh">在網路上自動生成圖像（使用 Diffusion 模型）</span><span class="lang en">Auto image generation with a diffusion model (online).</span><br>
+  prompt e.g: 「Real Asia male only fully face」
+  <h1><a href="https://huggingface.co/spaces/stabilityai/stable-diffusion" target="_blank">[Hugging Face Spaces (Diffusers-based models)]</a>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 1. 讀取語系偏好（localStorage 或 預設 zh）
+      let currentLang = localStorage.getItem('siteLang') || 'en';
+  
+      // 2. 切換函式：文字 + input[type=file].lang + 存偏好
+      function showLang(lang) {
+        currentLang = lang;
+        // 切文字
+        document.querySelectorAll('.lang').forEach(el =>
+          el.style.display = el.classList.contains(lang) ? 'inline' : 'none'
+        );
+        // 切 input-file 的 lang 屬性
+        document.querySelectorAll('input[type=file]').forEach(input =>
+          input.setAttribute('lang', lang === 'zh' ? 'zh-Hant' : 'en')
+        );
+        // 記到 localStorage
+        localStorage.setItem('siteLang', lang);
+      }
+  
+      // 3. 綁定按鈕
+      document.getElementById('btn-zh').onclick = () => showLang('zh');
+      document.getElementById('btn-en').onclick = () => showLang('en');
+  
+      // 4. 初始執行一次
+      showLang(currentLang);
+  
+      // 5. （如果有 diff_result，就初始化 Chart）
+      {% if diff_result %}
+        const pReal    = {{ diff_result.p_real }};
+        const pFake    = {{ diff_result.p_fake }};
+        const verdictZh= "{{ diff_result.label }}";
+        const verdictEn= "{{ diff_result.label_en|default:diff_result.label }}";
+        const labelsZh = ["偽造","真實"];
+        const labelsEn = ["Fake","Real"];
+        const ctx = document.getElementById("dfChart").getContext("2d");
+        new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: currentLang === 'en' ? labelsEn : labelsZh,
+            datasets: [{ data: [pFake, pReal], backgroundColor: ["#F44336","#4CAF50"] }]
+          },
+          options: {
+            plugins: {
+              title: {
+                display: true,
+                text: (currentLang==='en'? 'Verdict: ':'判定：') +
+                      (currentLang==='en'? verdictEn : verdictZh),
+                font: { size: 18 }
+              },
+              legend: { position: "bottom", labels: { font: { size: 14 } } }
+            }
+          }
+        });
+      {% endif %}
+    });
+  </script>
+  
+</body>
+</html>
