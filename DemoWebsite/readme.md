@@ -70,9 +70,7 @@ DemoWebsite/                 # Root directory
 
 ---
 
-## Quick Start / 快速上手
-
-### Generate a deepfake / 生成深偽影像
+### Quick Start / 快速上手
 ```bash
 # Start Django server
 python manage.py runserver 0.0.0.0:8000
