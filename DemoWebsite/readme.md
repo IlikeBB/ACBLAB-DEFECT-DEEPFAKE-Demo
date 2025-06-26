@@ -3,7 +3,8 @@
 ---
 
 ## Project Setup / 專案設定
-Clone the [MobileFaceSwap](https://github.com/justinpinkney/MobileFaceSwap) repository:
+
++ Clone the [MobileFaceSwap](https://github.com/justinpinkney/MobileFaceSwap) repository:
    ```bash
    git clone https://github.com/justinpinkney/MobileFaceSwap.git
    cd MobileFaceSwap
@@ -34,14 +35,16 @@ Clone the [MobileFaceSwap](https://github.com/justinpinkney/MobileFaceSwap) repo
   啟動開發伺服器並執行 Django 命令
 - **deepfake_site/urls.py**: Directs root path to the `forgery_detector` app.  
   將根路由導向 `forgery_detector` 應用
-- **forgery_detector/views.py**: Three main actions:
-  1. `upload`: Save uploaded images.  
-     儲存上傳影像
-  2. `swap`: Execute face swapping via `defect_generator.py`.  
-     呼叫換臉程式執行置換
-  3. `detect`: Call `detect_deepfake` to classify image.  
-     執行偵測並回傳結果
-- **dashboard.html**: Renders forms, previews, and Chart.js results, with language toggle script.  
+- **`./forgery_detector/views.py`**: Main view handling logic for face swap demo
+
+  - Implements `dashboard(request)` which:
+    1. On GET, clears session and media/resource folders
+    2. On POST with `action='upload'`, saves source (A) and target (B) images with UUID filenames
+    3. On POST with `action='swap'`, calls `face_swap(src_path, dst_path, swap_path)` and stores result
+    4. Retrieves URLs for A, B, and swap results from session for template rendering
+
+- **`./forgery_detector/predict.py`**: Core detection function `detect_deepfake(...)`.
+- **`./forgery_detector/templates/forgery_detector/dashboard.html`**: Main UI template with multilingual support. Renders forms, previews, and Chart.js results, with language toggle script.  
   呈現表單、預覽及圖表，並支援語言切換腳本
 
 ---
@@ -52,4 +55,10 @@ Clone the [MobileFaceSwap](https://github.com/justinpinkney/MobileFaceSwap) repo
 ```bash
 # Start Django server
 python manage.py runserver 0.0.0.0:8000
+
+# In another terminal, run the generator
+python defect_generator.py \
+  --source path/to/source.jpg \
+  --target path/to/target.jpg \
+  --output results/
 ```
