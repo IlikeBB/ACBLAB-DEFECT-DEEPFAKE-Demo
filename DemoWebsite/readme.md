@@ -15,24 +15,26 @@
 
 ---
 
-## <span class="lang-en">Quick Start</span><span class="lang-zh">快速上手</span>
+## Quick Start / 快速上手
 
-<span class="lang-en">
-1. Activate your Django server:
-   ```bash
-   cd deepfake_site
-   python manage.py runserver 0.0.0.0:8000
-   ```
-2. Open in browser: http://localhost:8000/  
-3. Upload your A/B images, click “Execute Swap”, then upload detection image and choose model.
-</span>
+### Generate a deepfake / 生成深偽影像
 
-<span class="lang-zh">
-1. 啟動 Django 伺服器：
-   ```bash
-   cd deepfake_site
-   python manage.py runserver 0.0.0.0:8000
-   ```
-2. 瀏覽器開啟：http://localhost:8000/  
-3. 上傳來源/目標影像，點擊「執行換臉」，再上傳偵測影像並選擇模型。
-</span>
+```bash
+cd deepfake_site
+python manage.py runserver 0.0.0.0:8000
+# or from repo root if manage.py is here
+# python manage.py runserver 0.0.0.0:8000
+
+# Then in another terminal:
+python ../defect_generator.py --source path/to/source.jpg --target path/to/target.jpg --output results/
+```
+
+### Detect deepfake / 檢測深偽影像
+
+```bash
+# After running the server and uploading through UI,
+# or directly:
+python ../defect_detector.py --image path/to/image.jpg --model MODEL_NAME
+```
+
+> Outputs and generated images are saved under `results/` by default.
