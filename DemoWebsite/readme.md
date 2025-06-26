@@ -24,17 +24,4 @@ cd deepfake_site
 python manage.py runserver 0.0.0.0:8000
 # or from repo root if manage.py is here
 # python manage.py runserver 0.0.0.0:8000
-
-# Then in another terminal:
-python ../defect_generator.py --source path/to/source.jpg --target path/to/target.jpg --output results/
 ```
-
-### Detect deepfake / 檢測深偽影像
-
-```bash
-# After running the server and uploading through UI,
-# or directly:
-python ../defect_detector.py --image path/to/image.jpg --model MODEL_NAME
-```
-
-> Outputs and generated images are saved under `results/` by default.
