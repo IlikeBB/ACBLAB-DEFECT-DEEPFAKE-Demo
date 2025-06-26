@@ -16,11 +16,6 @@
   `detect_deepfake(...)` 函式實作
 - **`./forgery_detector/templates/forgery_detector/dashboard.html`**: Main UI template with multilingual support  
   主畫面範本，支援多語切換
-- **`defect_generator.py`** (root): Runs face-swap workflow  
-  執行換臉流程
-- **`defect_detector.py`** (root): Runs fake detection workflow  
-  執行偽造檢測流程
-
 ---
 
 ## Django Construction / Django 架構說明
