@@ -14,22 +14,43 @@
 
 ## Project Structure / 專案結構
 
-- **`./manage.py`**: Django management script (start server, migrations).  
-  Django 管理腳本（啟動伺服器、資料庫遷移）
-- **`./deepfake_site/settings.py`**: Django settings.  
-  專案設定檔
-- **`./deepfake_site/urls.py`**: URL routing configuration.  
-  路由設定
-- **`./forgery_detector/views.py`**: Handles upload, swap, and detect requests.  
-  處理檔案上傳、換臉和檢測請求
-- **`./forgery_detector/predict.py`**: Core detection function `detect_deepfake(...)`.  
-  偵測函式實作
-- **`./forgery_detector/templates/forgery_detector/dashboard.html`**: Main UI template with multilingual support.  
-  前端介面模板，支援中英切換
+Below is the full project folder layout:
+
+```bash
+DemoWebsite/                 # Root directory
+├── Deep-Fake-Detector-v2-Model/   # Detection model cache
+│   └── infer_hf.py                # Example loading script
+├── deepfake_site/                 # Django project
+│   ├── checkpoints/               # Face swap model weights
+│   ├── deepfake_site/             # Django settings module
+│   │   ├── __init__.py
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   └── wsgi.py
+│   ├── forgery_detector/          # Swap & detection app
+│   │   ├── __init__.py
+│   │   ├── detector.py
+│   │   ├── forms.py
+│   │   ├── predict.py
+│   │   ├── urls.py
+│   │   ├── views.py
+│   │   └── templates/forgery_detector/
+│   │       └── dashboard.html
+│   ├── media/                     # Uploaded A/B images
+│   ├── resources/                 # Generated swap outputs
+│   ├── db.sqlite3                 # SQLite database for sessions
+│   └── manage.py                  # Django management script
+├── MobileFaceSwap/                # MobileFaceSwap repository
+│   ├── models/
+│   ├── utils/
+│   ├── image_test.py
+│   └── ...                        # Other MobileFaceSwap files
+└── README.md                      # This file
+```
 
 ---
 
-## Django Construction / Django 架構說明
+## Django Construction / Django 架構說明 / Django 架構說明
 
 - **manage.py**: Launches the development server and runs commands.  
   啟動開發伺服器並執行 Django 命令
@@ -55,10 +76,4 @@
 ```bash
 # Start Django server
 python manage.py runserver 0.0.0.0:8000
-
-# In another terminal, run the generator
-python defect_generator.py \
-  --source path/to/source.jpg \
-  --target path/to/target.jpg \
-  --output results/
 ```
