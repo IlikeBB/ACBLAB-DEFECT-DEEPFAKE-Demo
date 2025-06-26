@@ -4,9 +4,9 @@
 
 ## Project Setup / 專案設定
 
-+ Clone the [MobileFaceSwap](https://github.com/justinpinkney/MobileFaceSwap) repository:
++ Clone the [MobileFaceSwap](https://github.com/Seanseattle/MobileFaceSwap#) repository:
    ```bash
-   git clone https://github.com/justinpinkney/MobileFaceSwap.git
+   git clone https://github.com/Seanseattle/MobileFaceSwap.git
    cd MobileFaceSwap
    # Follow its README to install dependencies
    ```
