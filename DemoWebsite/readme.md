@@ -50,7 +50,7 @@ DemoWebsite/                 # Root directory
 
 ---
 
-## Django Construction / Django 架構說明 / Django 架構說明
+## Django Construction / Django 架構說明
 
 - **manage.py**: Launches the development server and runs commands.  
   啟動開發伺服器並執行 Django 命令
